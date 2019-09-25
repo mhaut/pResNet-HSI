@@ -146,10 +146,10 @@ def main():
 					'best_acc': best_acc,
 					'optimizer' : optimizer.state_dict(),
 			}
-			torch.save(state, "best_model"+str(args.spatialsize)+".pth.tar")
+			torch.save(state, "best_model.pth.tar")
 			best_acc = test_acc
 
-	checkpoint = torch.load("best_model"+str(args.spatialsize)+".pth.tar")
+	checkpoint = torch.load("best_model.pth.tar")
 	best_acc = checkpoint['best_acc']
 	start_epoch = checkpoint['epoch']
 	model.load_state_dict(checkpoint['state_dict'])
