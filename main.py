@@ -116,7 +116,6 @@ def main():
 	else: print("spatialsize no tested")
 
 	model = PYRM.pResNet(args.depth, args.alpha, num_classes, n_bands, avgpoosize, args.inplanes, bottleneck=args.bottleneck) # for PyramidNet
-	model = torch.nn.DataParallel(model)
 	if use_cuda: model = model.cuda()
 
 	criterion = torch.nn.CrossEntropyLoss()
