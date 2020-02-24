@@ -88,7 +88,7 @@ def main():
     parser.add_argument('--dataset', default='IP', type=str, help='dataset (options: IP, UP, SV, KSC)')
     parser.add_argument('--tr_percent', default=0.15, type=float, help='samples of train set')
     parser.add_argument('--tr_bsize', default=100, type=int, help='mini-batch train size (default: 100)')
-    parser.add_argument('--te_bsize', default=100, type=int, help='mini-batch test size (default: 1000)')
+    parser.add_argument('--te_bsize', default=1000, type=int, help='mini-batch test size (default: 1000)')
     parser.add_argument('--depth', default=32, type=int, help='depth of the network (default: 32)')
     parser.add_argument('--alpha', default=48, type=int, help='number of new channel increases per depth (default: 12)')
     parser.add_argument('--inplanes', dest='inplanes', default=16, type=int, help='bands before blocks')
