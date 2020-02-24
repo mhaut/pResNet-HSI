@@ -22,6 +22,10 @@ sh retrieveData.sh
 ### Run code
 
 ```
+Without Validation
 python main.py --epochs 200 --alpha 100 --tr_bsize 100 --lr 0.1 --spatialsize 11 --dataset IP --inplanes 32
+
+With Validation
+python main.py --use_val --val_percent 0.2 --epochs 200 --alpha 100 --tr_bsize 100 --lr 0.1 --spatialsize 11 --dataset IP --inplanes 32
 
 ```

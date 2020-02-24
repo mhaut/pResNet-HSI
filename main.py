@@ -19,9 +19,9 @@ def load_hyper(args):
     x_train, x_test, y_train, y_test = auxil.split_data(pixels, labels, args.tr_percent)
     if args.use_val: x_val, x_test, y_val, y_test = auxil.split_data(x_test, y_test, args.val_percent)
     del pixels, labels
-    train_hyper = HyperData((np.transpose(x_train, (0, 3, 1, 2)).astype("float32"),y_train), None)
-    test_hyper  = HyperData((np.transpose(x_test, (0, 3, 1, 2)).astype("float32"),y_test), None)
-    if args.use_val: val_hyper = HyperData((np.transpose(x_val, (0, 3, 1, 2)).astype("float32"),y_val), None)
+    train_hyper = HyperData((np.transpose(x_train, (0, 3, 1, 2)).astype("float32"),y_train))
+    test_hyper  = HyperData((np.transpose(x_test, (0, 3, 1, 2)).astype("float32"),y_test))
+    if args.use_val: val_hyper = HyperData((np.transpose(x_val, (0, 3, 1, 2)).astype("float32"),y_val))
     else: val_hyper = None
     kwargs = {'num_workers': 1, 'pin_memory': True}
     train_loader = torch.utils.data.DataLoader(train_hyper, batch_size=args.tr_bsize, shuffle=True, **kwargs)
