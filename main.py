@@ -16,7 +16,10 @@ def load_hyper(args):
     data, labels, numclass = auxil.loadData(args.dataset, num_components=args.components)
     pixels, labels = auxil.createImageCubes(data, labels, windowSize=args.spatialsize, removeZeroLabels = True)
     bands = pixels.shape[-1]; numberofclass = len(np.unique(labels))
-    x_train, x_test, y_train, y_test = auxil.split_data(pixels, labels, args.tr_percent)
+    if args.tr_percent < 1: # split by percent
+        x_train, x_test, y_train, y_test = auxil.split_data(pixels, labels, args.tr_percent)
+    else: # split by samples per class
+        x_train, x_test, y_train, y_test = auxil.split_data_fix(pixels, labels, args.tr_percent)
     if args.use_val: x_val, x_test, y_val, y_test = auxil.split_data(x_test, y_test, args.val_percent)
     del pixels, labels
     train_hyper = HyperData((np.transpose(x_train, (0, 3, 1, 2)).astype("float32"),y_train))

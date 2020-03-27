@@ -13,6 +13,32 @@ def random_unison(a,b, rstate=None):
     p = np.random.RandomState(seed=rstate).permutation(len(a))
     return a[p], b[p]
 
+
+def split_data_fix(pixels, labels, n_samples, rand_state=None):
+    pixels_number = np.unique(labels, return_counts=1)[1]
+    train_set_size = [n_samples] * len(np.unique(labels))
+    tr_size = int(sum(train_set_size))
+    te_size = int(sum(pixels_number)) - int(sum(train_set_size))
+    sizetr = np.array([tr_size]+list(pixels.shape)[1:])
+    sizete = np.array([te_size]+list(pixels.shape)[1:])
+    train_x = np.empty((sizetr)); train_y = np.empty((tr_size)); test_x = np.empty((sizete)); test_y = np.empty((te_size))
+    trcont = 0; tecont = 0;
+    for cl in np.unique(labels):
+        pixels_cl = pixels[labels==cl]
+        labels_cl = labels[labels==cl]
+        pixels_cl, labels_cl = random_unison(pixels_cl, labels_cl, rstate=rand_state)
+        for cont, (a,b) in enumerate(zip(pixels_cl, labels_cl)):
+            if cont < train_set_size[cl]:
+                train_x[trcont,:,:,:] = a
+                train_y[trcont] = b
+                trcont += 1
+            else:
+                test_x[tecont,:,:,:] = a
+                test_y[tecont] = b
+                tecont += 1
+    train_x, train_y = random_unison(train_x, train_y, rstate=rand_state)
+    return train_x, test_x, train_y, test_y
+
 def split_data(pixels, labels, percent, splitdset="custom", rand_state=69):
     splitdset = "sklearn"
     if splitdset == "sklearn":
@@ -40,7 +66,6 @@ def split_data(pixels, labels, percent, splitdset="custom", rand_state=69):
                     test_y[tecont] = b
                     tecont += 1
         train_x, train_y = random_unison(train_x, train_y, rstate=rand_state)
-        test_x, test_y   = random_unison(test_x, test_y, rstate=rand_state)
         return train_x, test_x, train_y, test_y
 
 
